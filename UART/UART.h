@@ -1,7 +1,14 @@
+/*
+ * UART.h
+ *
+ *  Created on: Dec 21, 2024
+ *      Author: sh124
+ */
 #ifndef UART_H
 #define UART_H
 
 #include "MKE16Z4.h"
+#define UART_TIMEOUT 0xFFFFFFFF // Giá trị timeout
 
 typedef enum
 {
@@ -23,3 +30,5 @@ void UART_EnableInterrupts(LPUART_Type *base);
 void UART_DisableInterrupts(LPUART_Type *base);
 
 #endif // UART_H
+
+
