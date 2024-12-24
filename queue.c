@@ -7,7 +7,6 @@
 Queue* createQueue() {
     Queue* q = (Queue*)malloc(sizeof(Queue));
     if (!q) {
-        printf("Failed to allocate memory for the queue.\n");
         exit(EXIT_FAILURE);
     }
     q->front = q->rear = NULL;
@@ -23,7 +22,6 @@ int isEmpty(Queue* q) {
 void enqueue(Queue* q, uint8_t value) {
     Node* temp = (Node*)malloc(sizeof(Node));
     if (!temp) {
-        printf("Failed to allocate memory for the new node.\n");
         exit(EXIT_FAILURE);
     }
     temp->data = value;
@@ -41,7 +39,6 @@ void enqueue(Queue* q, uint8_t value) {
 // Function to remove an element from the queue (dequeue)
 uint8_t dequeue(Queue* q) {
     if (isEmpty(q)) {
-        printf("Queue is empty. Cannot dequeue.\n");
         exit(EXIT_FAILURE);
     }
     Node* temp = q->front;
@@ -59,7 +56,6 @@ uint8_t dequeue(Queue* q) {
 // Function to display the contents of the queue
 void displayQueue(Queue* q) {
     if (isEmpty(q)) {
-        printf("Queue is empty.\n");
         return;
     }
     Node* temp = q->front;
