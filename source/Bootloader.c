@@ -1,59 +1,55 @@
 #include "MKE16Z4.h"
+#include <stdint.h>
 #include "uart.h"
 #include "queue.h"
+
 #define APP_START_ADDRESS  0x2000
 #define SHARED_VAR_ADDRESS (0x200017F0)
-volatile uint32_t *shared_var = (volatile uint32_t *)SHARED_VAR_ADDRESS;
+volatile uint32_t *share_value = (volatile uint32_t *)SHARED_VAR_ADDRESS;
 
 void set_share_val(void);
 void BootloaderMode(void);
 void JumpToApplication(void);
 
-
-uart_config_t uartConfig = {
-	.baudRate = 9600,
-	.clockSrc = 48000000 // Clock nguồn
-};
-
-
-
-
+Queue* q;		// create a new queue value
 
 int main(void) {
 
+	q = createQueue();		// create a new queue
 
+	uart_config_t uartConfig = {
+		.baudRate = 9600,
+		.clockSrc = 48000000
+	};
+
+    UART_Init(LPUART0, &uartConfig); 	// setup UART
+    UART_EnableInterrupts(LPUART0);		// Turn on UART
 	set_share_val();
 
-    if (*shared_var == 0x01)
+    if (*share_value == 0x01)
     {
-        BootloaderMode();
+        BootloaderMode();				// boot mode
     }
     else
     {
-        JumpToApplication();
+        JumpToApplication();			// app mode
     }
-
-    while (1);
 }
-
 
 void set_share_val(void)
 {
-    if (*shared_var != 0x01)
+    if (*share_value != 0x01)
     {
-        *shared_var = 0x00;
+        *share_value = 0x00;
     }
 }
 
 void BootloaderMode(void)
 {
-    UART_Init(LPUART0, &uartConfig);
-    UART_EnableInterrupts(LPUART0);
+	// Data_filtering and write data in flash
+	//.......
 
-    // Data filtering
-
-
-    // Data writting
+	// if done or EOF -> JumpToApplication
 }
 
 void JumpToApplication(void)
@@ -76,5 +72,6 @@ void JumpToApplication(void)
 
 void LPUART0_IRQHandler(void)
 {
-	while(1);
+	uint8_t data = LPUART0->DATA;
+	enqueue(q, data);
 }

@@ -61,6 +61,4 @@ typedef enum {
 // function prototype
 void port_init(port_config_t *config);
 
-
-
 #endif
