@@ -108,3 +108,61 @@ void port_init(port_config_t *config)
         config->port->ISFR &= ~(1 << config->pin);
     }
 }
+
+void turn_off_led(port_config_t *config)
+{
+	switch ((uint32_t)config->port)
+	{
+
+	case (uint32_t)PORTA:
+		GPIOA->PDOR &= ~GPIO_PDOR_PDO_MASK;
+		GPIOA->PDOR |= (1 << config->pin);
+		break;
+
+	case (uint32_t)PORTB:
+		GPIOB->PDOR &= ~GPIO_PDOR_PDO_MASK;
+		GPIOB->PDOR |= (1 << config->pin);
+		break;
+
+	case (uint32_t)PORTC:
+		GPIOC->PDOR &= ~GPIO_PDOR_PDO_MASK;
+		GPIOC->PDOR |= (1 << config->pin);
+		break;
+
+	case (uint32_t)PORTD:
+		GPIOD->PDOR &= ~GPIO_PDOR_PDO_MASK;
+		GPIOD->PDOR |= (1 << config->pin);
+		break;
+
+	case (uint32_t)PORTE:
+		GPIOE->PDOR &= ~GPIO_PDOR_PDO_MASK;
+		GPIOE->PDOR |= (1 << config->pin);
+		break;
+	}
+}
+void turn_on_led(port_config_t *config)
+{
+	switch ((uint32_t)config->port)
+	{
+
+	case (uint32_t)PORTA:
+		GPIOA->PDOR &= ~(1 << config->pin);
+		break;
+
+	case (uint32_t)PORTB:
+		GPIOB->PDOR &= ~(1 << config->pin);
+		break;
+
+	case (uint32_t)PORTC:
+		GPIOC->PDOR &= ~(1 << config->pin);
+		break;
+
+	case (uint32_t)PORTD:
+		GPIOD->PDOR &= ~(1 << config->pin);
+		break;
+
+	case (uint32_t)PORTE:
+		GPIOE->PDOR &= ~(1 << config->pin);
+		break;
+	}
+}

@@ -1,10 +1,3 @@
-/*
- * port.h
- *
- *  Created on: Dec 17, 2024
- *      Author: binhc
- */
-
 #ifndef PORT_H_
 #define PORT_H_
 
@@ -39,7 +32,6 @@ typedef enum {
     PORT_INTERRUPT_ENABLED  = 1,
 } port_interrupt_t;
 
-
 typedef struct {
     PORT_Type * port;
     uint32_t pin;
@@ -47,7 +39,9 @@ typedef struct {
     port_direction_t direction;
     port_pull_t pull;
     port_interrupt_t interrupt;
+
 }port_config_t;
+
 
 
 
@@ -60,5 +54,8 @@ typedef enum {
 
 // function prototype
 void port_init(port_config_t *config);
+void turn_on_led(port_config_t *config);
+void turn_off_led(port_config_t *config);
+
 
 #endif
