@@ -3,15 +3,13 @@
 
 #include "MKE16Z4.h"
 
-typedef enum
-{
+typedef enum {
     UART_SUCCESS = 0,
     UART_ERROR = 1,
-    UART_ERROR_TIMEOUT = 3,
+	UART_ERROR_TIMEOUT = 3,
 } uart_status_t;
 
-typedef struct
-{
+typedef struct {
     uint32_t baudRate;
     uint32_t clockSrc;
 } uart_config_t;
