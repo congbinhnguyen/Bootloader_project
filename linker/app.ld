@@ -28,7 +28,15 @@ ENTRY(ResetISR)
 
 SECTIONS
 {
-     /* MAIN TEXT SECTION */
+    /* VECTOR TABLE SECTION */
+    .vectors : ALIGN(4)
+    {
+        __vectors_start__ = ABSOLUTE(.); /* Định nghĩa điểm bắt đầu vector table */
+        KEEP(*(.isr_vector))            /* Giữ vector table trong quá trình tối ưu hóa */
+        __vectors_end__ = .;            /* Điểm kết thúc vector table */
+    } > PROGRAM_FLASH
+
+    /* MAIN TEXT SECTION */
     .text : ALIGN(4)
     {
         FILL(0xff)
