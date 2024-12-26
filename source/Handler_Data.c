@@ -1,9 +1,3 @@
-/*
- * Handler_Data.c
- *
- *  Created on: Dec 25, 2024
- *      Author: Administrator
- */
 
 #include "Handler_Data.h"
 #include <string.h>
@@ -105,7 +99,6 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 			if (SrecLine->u8SrecType == 9 && count == 2) {
 
 				*State = SREC_DONE;
-
 				*share_value = 0x09; 	// reset share value application
 				NVIC_SystemReset();		// Reset system to jump to app
 
@@ -141,7 +134,7 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 
 				// Ghi vào Flash.
 				uint32_t i = 0;
-				while (i < sizeof(Buffer_Data) / 4) //  4 byte
+				while (i < sizeof(Buffer_Data) / 16) //  4 byte
 				{
 
 					uint32_t dataToWrite = (Buffer_Data[i * 4 + 3] << 24) |  // Byte thấp nhất (LSB)
@@ -167,12 +160,11 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 			break;
 
 //		case SREC_DONE:
-//			*share_value = 0x09; 	// reset share value application
-//			NVIC_SystemReset();		// Reset system to jump to app
+//				// JumtoApp.
 //
-////			*State = SREC_READ_RECORDTYPE;
-////			count = 0;
-////			break;
+//			*State = SREC_READ_RECORDTYPE;
+//			count = 0;
+//			break;
 
 		case SREC_READ_ERROR:
 			*State = SREC_READ_RECORDTYPE;

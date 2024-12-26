@@ -6,7 +6,7 @@
 #include "Flash.h"
 #include "Handler_Data.h"
 
-#define APP_START_ADDRESS  0x2000
+#define APP_START_ADDRESS  0x4000
 #define SHARED_VAR_ADDRESS (0x200017FE)
 volatile uint8_t *share_value = (volatile uint8_t *)SHARED_VAR_ADDRESS;
 
@@ -71,7 +71,7 @@ void BootloaderMode(void)
 			Handler_Data(&g_State, &g_SrecLine);
 		}
 	}
-	*share_value = 0x01; 	// reset share value application
+	*share_value = 0x09; 	// reset share value application
 	NVIC_SystemReset();		// Reset system to jump to app
 
 }
