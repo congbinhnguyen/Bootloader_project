@@ -8,7 +8,7 @@ GROUP (
 MEMORY
 {
   /* Define each memory region */
-  PROGRAM_FLASH (rx) : ORIGIN = 0x00, LENGTH = 0x2000 /* 8K bytes (alias Flash) */  
+  PROGRAM_FLASH (rx) : ORIGIN = 0x00, LENGTH = 0x3000 /* 8K bytes (alias Flash) */  
   SRAM (rwx) : ORIGIN = 0x1ffff800, LENGTH = 0x1FFB 
   SHARED_VAR (rwx) : ORIGIN = 0x200017FE, LENGTH = 0x1 /* 1 bytes shared variable */ 
 }
