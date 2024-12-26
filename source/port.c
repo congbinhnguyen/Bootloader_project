@@ -98,13 +98,23 @@ void port_init(port_config_t *config)
     config->port->PCR[config->pin] &= ~PORT_PCR_PE_MASK;
     config->port->PCR[config->pin] |= PORT_PCR_PE(config->pull);
 
-    // set the interrupt
+
+    // set interrupt
     if (config->interrupt == PORT_INTERRUPT_ENABLED)
     {
+        // Clear any pending interrupt flags for this pin
         config->port->ISFR |= (1 << config->pin);
+
+        // Enable interrupt for the specific pin and set edge type
+        config->port->PCR[config->pin] &= ~PORT_PCR_IRQC_MASK; // Clear existing settings
+        config->port->PCR[config->pin] |= PORT_PCR_IRQC(0b1010); // Configure for falling edge
+
+        // Enable NVIC interrupt for the corresponding PORT
+        NVIC_EnableIRQ(PORTBCD_IRQn);
     }
     else
     {
+        config->port->PCR[config->pin] &= ~PORT_PCR_IRQC_MASK; // Disable interrupt
         config->port->ISFR &= ~(1 << config->pin);
     }
 }

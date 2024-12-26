@@ -1,13 +1,12 @@
 // queue.c
 #include "queue.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 // Function to create a new queue
 Queue* createQueue() {
     Queue* q = (Queue*)malloc(sizeof(Queue));
-    if (!q) {
-        printf("Failed to allocate memory for the queue.\n");
+    if (!q)
+    {
         exit(EXIT_FAILURE);
     }
     q->front = q->rear = NULL;
@@ -22,26 +21,26 @@ int isEmpty(Queue* q) {
 // Function to add an element to the queue (enqueue)
 void enqueue(Queue* q, uint8_t value) {
     Node* temp = (Node*)malloc(sizeof(Node));
-    if (!temp) {
-        printf("Failed to allocate memory for the new node.\n");
+    if (!temp)
+    {
         exit(EXIT_FAILURE);
     }
     temp->data = value;
     temp->next = NULL;
-    if (q->rear == NULL) {
-        // If the queue is empty, both front and rear point to the new node
+    if (q->rear == NULL)
+    {
         q->front = q->rear = temp;
         return;
     }
-    // Add the new node at the end of the queue and update the rear pointer
     q->rear->next = temp;
     q->rear = temp;
 }
 
 // Function to remove an element from the queue (dequeue)
-uint8_t dequeue(Queue* q) {
-    if (isEmpty(q)) {
-        printf("Queue is empty. Cannot dequeue.\n");
+uint8_t dequeue(Queue* q)
+{
+    if (isEmpty(q))
+    {
         exit(EXIT_FAILURE);
     }
     Node* temp = q->front;
@@ -49,7 +48,8 @@ uint8_t dequeue(Queue* q) {
     q->front = q->front->next;
 
     // If the queue becomes empty after dequeue, update the rear pointer
-    if (q->front == NULL) {
+    if (q->front == NULL)
+    {
         q->rear = NULL;
     }
     free(temp);
@@ -59,21 +59,20 @@ uint8_t dequeue(Queue* q) {
 // Function to display the contents of the queue
 void displayQueue(Queue* q) {
     if (isEmpty(q)) {
-        printf("Queue is empty.\n");
         return;
     }
     Node* temp = q->front;
-    printf("Queue: ");
-    while (temp != NULL) {
-        printf("%c ", temp->data);
+    while (temp != NULL)
+    {
         temp = temp->next;
     }
-    printf("\n");
 }
 
 // Function to free the memory allocated for the queue
-void freeQueue(Queue* q) {
-    while (!isEmpty(q)) {
+void freeQueue(Queue* q)
+{
+    while (!isEmpty(q))
+    {
         dequeue(q);
     }
     free(q);
