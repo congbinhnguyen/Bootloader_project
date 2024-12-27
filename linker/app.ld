@@ -14,8 +14,8 @@ MEMORY
 }
 
   /* Define a symbol for the top of each memory region */
-  __base_PROGRAM_FLASH = 0x2000;       /* PROGRAM_FLASH */
-  __top_PROGRAM_FLASH = 0x2000 + 0x2000; /* 8K bytes */
+  __base_PROGRAM_FLASH = 0x4000;       /* PROGRAM_FLASH */
+  __top_PROGRAM_FLASH = 0x4000 + 0x2000; /* 8K bytes */
   __base_SRAM = 0x1FFFF800;           /* SRAM */
   __top_SRAM = 0x1FFFF800 + 0x1FFB;   /* ~8KB - 5 bytes */
   __base_Flash = __base_PROGRAM_FLASH; 

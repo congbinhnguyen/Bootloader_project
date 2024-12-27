@@ -150,7 +150,7 @@ SECTIONS
 
 
     /* SHARED VARIABLE SECTION */
-    .shared_var (NOLOAD) : ALIGN(4)
+    .shared_var (NOLOAD) : ALIGN(1)
     {
         *(.shared_var*) /* Shared variable section */
     } > SHARED_VAR
