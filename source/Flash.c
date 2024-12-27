@@ -1,17 +1,9 @@
-/*
- * Flash.c
- *
- *  Created on: Dec 21, 2024
- *      Author: sh124
- */
-
 #include "Flash.h"
 
 #define FTFA_FSTAT_CLEAR_ERROR          0x30U
 #define START_COMMAND                   0x80U
 #define CMD_PROGRAM_LONGWORD            0x06U
 #define CMD_ERASE_SECTOR               	0x09U
-
 
 void FLASH_Write(uint32_t Address, uint32_t Data)
 {

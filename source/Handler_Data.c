@@ -2,9 +2,7 @@
 #include "Handler_Data.h"
 #include <string.h>
 extern Queue* q;
-
 extern uint8_t temp_data;
-
 extern volatile uint8_t *share_value;
 
 void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
@@ -96,12 +94,11 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 			temp_data = charToHex(temp_data);
 			SrecLine->u8CheckSum += temp_data * pow(16, 2 - count);
 
-			if (SrecLine->u8SrecType == 9 && count == 2) {
+			if (SrecLine->u8SrecType == 9 && count == 2)
+			{
 
-				*State = SREC_DONE;
 				*share_value = 0x09; 	// reset share value application
 				NVIC_SystemReset();		// Reset system to jump to app
-
 				break;
 			}
 
@@ -145,10 +142,7 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 					// Tính địa chỉ cần ghi
 					uint32_t address = SrecLine->u32Address + i * 4; // Địa chỉ tiếp theo
 
-
 					// Flash_EraseSector(address / 1024);
-
-
 					FLASH_Write(address, dataToWrite);
 					i++;
 				}
@@ -158,13 +152,6 @@ void Handler_Data(State_t *State, SrecLine_t *SrecLine) {
 				count = 0;
 			}
 			break;
-
-//		case SREC_DONE:
-//				// JumtoApp.
-//
-//			*State = SREC_READ_RECORDTYPE;
-//			count = 0;
-//			break;
 
 		case SREC_READ_ERROR:
 			*State = SREC_READ_RECORDTYPE;
