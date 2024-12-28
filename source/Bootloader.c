@@ -8,7 +8,8 @@
 #include <core_cm0plus.h>
 
 
-//#define T_SYSTICK (2000.0f / 1000)
+#define T_SYSTICK (200.0f / 1000)
+
 #define APP_START_ADDRESS  0x4000
 #define END_ADDRESS   0x1087F
 #define SECTOR_SIZE   1024 // 1 KB
@@ -23,13 +24,14 @@ Queue* q; // create a new queue value
 SrecLine_t g_SrecLine;
 State_t g_State = SREC_READ_RECORDTYPE;
 uint8_t temp_data = 0;
+
 uint8_t timer = 0;
 
 
 int main(void) {
-	//__enable_irq();
 
 	//*share_value = 0x01;
+	__enable_irq();
     if (!isAppValid() || (*share_value == 0x01))
     {
     	q = createQueue();
@@ -39,13 +41,13 @@ int main(void) {
 		};
 
 		UART_Init(LPUART0, &uartConfig);
-		UART_EnableInterrupts(LPUART0);
+		UART_EnableInterrupts(LPUART0); // Bật ngắt UART
 		BootloaderMode();
 
     }
     else
     {
-        JumpToApplication();
+        JumpToApplication(); // Vào chế độ ứng dụng
     }
 }
 
@@ -111,11 +113,15 @@ void JumpToApplication(void) {
 void LPUART0_IRQHandler(void) {
     uint8_t data = LPUART0->DATA;
     enqueue(q, data);
-    //timer++;
 }
 
-//void SysTick_Handler(void)
-//{
-//	*share_value = 0x09; 	// reset share value application
-//	NVIC_SystemReset();		// Reset system to jump to app
-//}
+void SysTick_Handler(void)
+{
+	timer++;
+	if(timer == 50)
+	{
+		*share_value = 0x09; 	// reset share value application
+		NVIC_SystemReset();		// Reset system to jump to app
+	}
+
+}
